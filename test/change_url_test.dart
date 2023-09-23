@@ -4,10 +4,10 @@ import 'package:two_week_project/user_input.dart';
 
 void main(){
   final input = UserInputs();
-  final changer = wikiBuilder();
+  final changer = WikiBuilder();
   test(('Page is trump'),(){
     final name= input.article;
-    final result = changer.NameChanger(name);
+    final result = changer.nameChanger(name);
     expect(result,'https://en.wikipedia.org/w/api.php?'
         'action=query&format=json&prop='
         'revisions&titles='
@@ -15,15 +15,15 @@ void main(){
   });
   test (('Page Limit is 1'),(){
     final limit = input.limit;
-    final result= changer.LimitChanger(limit);
+    final result= changer.limitChanger(limit);
     expect(result,'&rvprop=timestamp|user&rvlimit=1&redirects');
   });
   test(('This is a complete url'), (){
     final name = input.article;
     final limit = input.limit;
-    String firstHalf = changer.NameChanger(name);
-    String secondHalf = changer.LimitChanger(limit);
-    String complete = changer.Builder(firstHalf, secondHalf);
+    String firstHalf = changer.nameChanger(name);
+    String secondHalf = changer.limitChanger(limit);
+    String complete = changer.builder(firstHalf, secondHalf);
     expect(complete,'https://en.wikipedia.org/w/api.php?'
         'action=query&format=json&prop='
         'revisions&titles='
