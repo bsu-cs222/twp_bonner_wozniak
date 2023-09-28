@@ -7,10 +7,10 @@ class WikiBuilder {
     return url;
   }
   String limitChanger(String limit){
-    String url2= '&rvprop=timestamp|user&rvlimit=$limit&redirects';
-    return url2;
+    String url= '&rvprop=timestamp|user&rvlimit=$limit&redirects';
+    return url;
   }
-  String builder(String firstHalf,String secondHalf){
+  String urlCombiner(String firstHalf,String secondHalf){
     String complete = '$firstHalf$secondHalf';
     return complete;
   }
