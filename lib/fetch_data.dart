@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:two_week_project/change_url.dart';
 import 'package:two_week_project/user_input.dart';
@@ -13,21 +15,17 @@ class UrlFetcher{
   }
 }
 class DataFetcher {
-  Future<String> getDataFromInternet() async{
+   getDataFromInternet() async{
     final urlFetcher = UrlFetcher();
-    var urlAsString = urlFetcher.getInformationFromUser();
+    final urlAsString = urlFetcher.getInformationFromUser();
     Uri url = Uri.parse(urlAsString);
     http.Response internetResponse = await http.get(url);
-     return internetResponse.body;
+    String result = internetResponse.body;
+    return result;
   }
 }
-  //String string = response.body;
-  //final decoded = jsonDecode(string);
-  //final pagesMap = decoded['query']['pages'];
-  //final pageId = pagesMap.keys.first;
-  //final username = pagesMap[pageId]['revisions'][0]['user'];
-void main(){
+void main() async{
   final m = DataFetcher();
-  print(m.getDataFromInternet());
+  final stuff = await m.getDataFromInternet();
+  print(stuff);
 }
-
