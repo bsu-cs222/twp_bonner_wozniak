@@ -19,7 +19,7 @@ void main(){
     expect(secondHalf,'&rvprop=timestamp|user&rvlimit=1&redirects');
   });
   test(('This is a complete url'), (){
-    String complete = changer.builder(firstHalf, secondHalf);
+    String complete = changer.urlCombiner(firstHalf, secondHalf);
     expect(complete,'https://en.wikipedia.org/w/api.php?'
         'action=query&format=json&prop='
         'revisions&titles='

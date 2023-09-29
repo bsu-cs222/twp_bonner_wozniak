@@ -1,6 +1,4 @@
-import 'dart:io';
-
 class UserInputs{
-    var article= 'Trump';
-    var limit='1';
+    var article= 'rock';
+    var limit='4';
 }

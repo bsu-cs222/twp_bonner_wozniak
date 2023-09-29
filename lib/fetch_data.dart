@@ -1,6 +1,3 @@
-
-import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:two_week_project/change_url.dart';
 import 'package:two_week_project/user_input.dart';
@@ -15,7 +12,7 @@ class UrlFetcher{
   }
 }
 class DataFetcher {
-   getDataFromInternet() async{
+  Future<String> getDataFromInternet() async {
     final urlFetcher = UrlFetcher();
     final urlAsString = urlFetcher.getInformationFromUser();
     Uri url = Uri.parse(urlAsString);
@@ -23,9 +20,4 @@ class DataFetcher {
     String result = internetResponse.body;
     return result;
   }
-}
-void main() async{
-  final m = DataFetcher();
-  final stuff = await m.getDataFromInternet();
-  print(stuff);
 }
