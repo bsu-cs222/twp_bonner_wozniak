@@ -10,7 +10,7 @@ class UrlBuilder{
   }
 }
 class DataFetcher {
-  Future<String> getDataFromInternet({required String revisedUrl}) async {
+  Future<String> getDataFromInternet(String revisedUrl) async {
     Uri url = Uri.parse(revisedUrl);
     http.Response internetResponse = await http.get(url);
     String result = internetResponse.body;

@@ -6,7 +6,7 @@ void main()async{
   String url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&'
       'prop=revisions&titles=Soup&rvprop=timestamp|user&rvlimit=4&redirects';
   final data = DataFetcher();
-  String newUrl = await data.getDataFromInternet(revisedUrl: url);
+  String newUrl = await data.getDataFromInternet(url);
 test(("It works"), (){
   final parser = RevisionParser();
   String user = parser.getTheMostRecentEditor(newUrl);
