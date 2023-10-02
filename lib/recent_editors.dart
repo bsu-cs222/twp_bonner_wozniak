@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:two_week_project/fetch_data.dart';
 class RevisionParser {
   String getMostRecentEditors(String urlData,int limit) {
     final decoded = jsonDecode(urlData);

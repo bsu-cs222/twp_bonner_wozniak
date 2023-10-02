@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor:Colors.redAccent),
         useMaterial3: true,
       ),
-      home: Scaffold(
+      home: const Scaffold(
         body: MyHomePage(),
       ),
     );
@@ -30,6 +30,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
