@@ -1,4 +1,4 @@
 class UserInputs{
-    var article= '';
-    var limit='';
+    var article= 'trump';
+    var limit=1;
 }

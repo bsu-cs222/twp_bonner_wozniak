@@ -6,7 +6,7 @@ class WikiBuilder {
         '$name';
     return url;
   }
-  String limitChanger(String limit){
+  String limitChanger(int limit){
     String url= '&rvprop=timestamp|user&rvlimit=$limit&redirects';
     return url;
   }
