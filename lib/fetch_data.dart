@@ -1,16 +1,5 @@
-import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:two_week_project/change_url.dart';
-
-class UrlBuilder{
-  final urlFactory = WikiBuilder();
-  String getInformationFromUser({required String article, required int limit}){
-    final urlFirstHalf = urlFactory.nameChanger(article);
-    final urlSecondHalf =urlFactory.limitChanger(limit);
-    return urlFactory.urlCombiner(urlFirstHalf, urlSecondHalf);
-  }
-}
 class DataFetcher {
   Future<String> getDataFromInternet(String revisedUrl) async {
     Uri url = Uri.parse(revisedUrl);

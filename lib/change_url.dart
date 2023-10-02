@@ -1,17 +1,10 @@
-class WikiBuilder {
-  String nameChanger(String name){
+class UrlBuilder {
+  String build({required String name,required int limit}){
     String url = 'https://en.wikipedia.org/w/api.php?'
         'action=query&format=json&prop='
         'revisions&titles='
-        '$name';
+        '$name&rvprop=timestamp|user&rvlimit=$limit&redirects';
     return url;
-  }
-  String limitChanger(int limit){
-    String url= '&rvprop=timestamp|user&rvlimit=$limit&redirects';
-    return url;
-  }
-  String urlCombiner(String firstHalf,String secondHalf){
-    String complete = '$firstHalf$secondHalf';
-    return complete;
+
   }
 }

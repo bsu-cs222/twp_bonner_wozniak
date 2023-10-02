@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:two_week_project/change_url.dart';
 
 import 'package:two_week_project/fetch_data.dart';
 import 'package:two_week_project/recent_editors.dart';
@@ -36,28 +37,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String _messege = 'Enter in article name';
-  final _controller = TextEditingController();
-  final _controller2=TextEditingController();
+  final _userArticleInput = TextEditingController();
+  final _userLimitInput=TextEditingController();
   @override
   Widget build(BuildContext context){
       return Column(
         children: [
-          // Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: [
           Padding(
-            padding: const EdgeInsets.all(70),
+            padding: const EdgeInsets.all(20),
             child: TextField(
-              controller: _controller,
+              controller: _userArticleInput,
               decoration: const InputDecoration(labelText: 'Article name'),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(70),
+            padding: const EdgeInsets.all(20),
             child: TextField(
-              controller: _controller2,
+              controller: _userLimitInput,
               decoration: const InputDecoration(labelText: 'Number of Entries'),
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
             ),
           ),
           //   ],
@@ -72,28 +70,28 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       );
   }
-  void _onButtonPressed(){
+  void _onButtonPressed()async{
+    final builder = UrlBuilder();
+    final dataFetcher = DataFetcher();
+    final parser = RevisionParser();
+    String article = _userArticleInput.text;
+    int limit = int.parse(_userLimitInput.text);
+    String url = builder.build(name: article, limit: limit);
+    final urlInformation = dataFetcher.getDataFromInternet(url);
+    String userInformation;
+
+    Future<String> convertFutureToString() async{
+      return Future.value(urlInformation);
+    }
+
+    Future<String> future = convertFutureToString();
+    String convertedFuture = await future;
+    userInformation = parser.getMostRecentEditors(convertedFuture, limit);
+
     setState(() {
-      final builder = UrlBuilder();
-      final dataFetcher = DataFetcher();
-      final parser = RevisionParser();
-      String article = _controller.text;
-      int limit = int.parse(_controller2.text);
-      String userInformation = builder.getInformationFromUser(article: article , limit: limit);
-      final urlInformation = dataFetcher.getDataFromInternet(userInformation);
-      Future<String> convertFutureToString() async{
-        return Future.value(urlInformation);
-      }
-      void convert()async{
-        Future<String> string = convertFutureToString();
-        String url = await string;
-        print(limit);
-        final userInformation = parser.getMostRecentEditors(url, limit);
-        _messege = userInformation;
-      }
-      convert();
-      _controller.clear();
-      _controller2.clear();
+      _messege = userInformation;
+      _userArticleInput.clear();
+      _userLimitInput.clear();
     });
   }
 
