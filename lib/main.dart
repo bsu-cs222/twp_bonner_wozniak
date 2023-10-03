@@ -38,63 +38,63 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _messege = 'Enter in article name';
-  final _userArticleInput = TextEditingController();
+  String _messege = 'Enter In Article Name And Number of Desired Editors';
+  final _userArticleInput=TextEditingController();
   final _userLimitInput=TextEditingController();
   @override
   Widget build(BuildContext context){
       return Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(50),
             child: TextField(
               controller: _userArticleInput,
-              decoration: const InputDecoration(labelText: 'Article name'),
+              decoration: const InputDecoration(labelText: 'Article Name'),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(50),
             child: TextField(
               controller: _userLimitInput,
-              decoration: const InputDecoration(labelText: 'Number of Entries'),
+              decoration: const InputDecoration(labelText: 'Number of Editors'),
               keyboardType: TextInputType.text,
             ),
           ),
-          //   ],
-          // ),
           ElevatedButton(
               onPressed: _onButtonPressed,
               child: const Text(
-                  'Get Recent Editor'
-              )),
-          Text(_messege),
+                  'Get Recent Changes'
+              )
+          ),
+          Expanded(child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Text(_messege,style:const TextStyle
+              (fontSize:20,fontWeight: FontWeight.bold)
+            ),
+          ),
+          ),
 
         ],
       );
   }
   void _onButtonPressed()async{
-    final builder = UrlBuilder();
+    final urlBuilder = UrlBuilder();
     final dataFetcher = DataFetcher();
     final parser = RevisionParser();
     String article = _userArticleInput.text;
     int limit = int.parse(_userLimitInput.text);
-    String url = builder.build(name: article, limit: limit);
-    final urlInformation = dataFetcher.getDataFromInternet(url);
-    String userInformation;
-
+    String url = urlBuilder.build(articleName: article, numberOfEditors: limit);
+    final urlInformation = dataFetcher.getDataFromWikipedia(url);
     Future<String> convertFutureToString() async{
       return Future.value(urlInformation);
     }
-
-    Future<String> future = convertFutureToString();
-    String convertedFuture = await future;
-    userInformation = parser.getMostRecentEditors(convertedFuture, limit);
-
+    Future<String> urlInformationAsFuture = convertFutureToString();
+    String convertedUrlInformation = await urlInformationAsFuture;
+    String editorInformation = parser.getMostRecentEditors(convertedUrlInformation, limit);
     setState(() {
-      _messege = userInformation;
+      _messege = editorInformation;
       _userArticleInput.clear();
       _userLimitInput.clear();
     });
   }
-
 }

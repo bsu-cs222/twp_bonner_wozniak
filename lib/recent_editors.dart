@@ -1,25 +1,26 @@
 import 'dart:convert';
+
 class RevisionParser {
-  String getMostRecentEditors(String urlData,int limit) {
-    final decoded = jsonDecode(urlData);
-    final pagesMap = decoded['query']['pages'];
-    String users = getUsersWithinLimit(pagesMap: pagesMap, limit: limit);
-    return users;
+  String getMostRecentEditors(String urlData, int limit) {
+    final decodedUrl = jsonDecode(urlData);
+    final pagesMap = decodedUrl['query']['pages'];
+    String editors = getUsersWithinLimit(pagesMap,limit);
+    return editors;
   }
-  String displayUserInformation(var username, var timestamp) {
-    String organizedInfo = '|Username: $username Timestamp: $timestamp|\n';
-    return organizedInfo;
+  String displayEditorInformation(var username,var timestamp) {
+    String organizedInformation = '| Username: $username Date Changed: $timestamp |\n';
+    return organizedInformation;
   }
-  String getUsersWithinLimit({required final pagesMap,required int limit}){
+  String getUsersWithinLimit(var pagesMap,int limit) {
     final pagesId = pagesMap.keys.first;
-    List<String> recentUsers = [];
-    for(int i=0;i<limit;i++){
+    List<String> recentEditors = [];
+    for (int i = 0; i < limit; i++) {
       final username = pagesMap[pagesId]['revisions'][i]['user'];
       final timestamp = pagesMap[pagesId]['revisions'][i]['timestamp'];
-      final userInfo = displayUserInformation(username, timestamp);
-      recentUsers.add(userInfo);
+      final editorInformation = displayEditorInformation(username, timestamp);
+      recentEditors.add(editorInformation);
     }
-    String users = recentUsers.toString();
-    return users;
+    final editors = recentEditors.toString();
+    return editors;
   }
 }
